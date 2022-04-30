@@ -61,10 +61,10 @@ class EPub extends EventEmitter {
     this.imageroot = (imageroot || '/images/').trim();
     this.linkroot = (linkroot || '/links/').trim();
 
-    if (this.imageroot.substr(-1) != '/') {
+    if (this.imageroot.substr(-1) !== '/') {
       this.imageroot += '/';
     }
-    if (this.linkroot.substr(-1) != '/') {
+    if (this.linkroot.substr(-1) !== '/') {
       this.linkroot += '/';
     }
   }
@@ -123,7 +123,7 @@ class EPub extends EventEmitter {
     let i, len;
 
     for (i = 0, len = this.zip.names.length; i < len; i++) {
-      if (this.zip.names[i].toLowerCase() == 'mimetype') {
+      if (this.zip.names[i].toLowerCase() === 'mimetype') {
         this.mimeFile = this.zip.names[i];
         break;
       }
@@ -139,7 +139,7 @@ class EPub extends EventEmitter {
       }
       const txt = data.toString('utf-8').toLowerCase().trim();
 
-      if (txt != 'application/epub+zip') {
+      if (txt !== 'application/epub+zip') {
         this.emit('error', new Error('Unsupported mime type'));
         return;
       }
@@ -158,7 +158,7 @@ class EPub extends EventEmitter {
   getRootFiles () {
     let i, len;
     for (i = 0, len = this.zip.names.length; i < len; i++) {
-      if (this.zip.names[i].toLowerCase() == 'meta-inf/container.xml') {
+      if (this.zip.names[i].toLowerCase() === 'meta-inf/container.xml') {
         this.containerFile = this.zip.names[i];
         break;
       }
@@ -189,14 +189,14 @@ class EPub extends EventEmitter {
         if (Array.isArray(rootfile)) {
           for (i = 0, len = rootfile.length; i < len; i++) {
             if (rootfile[i]['@']['media-type'] &&
-                                rootfile[i]['@']['media-type'] == 'application/oebps-package+xml' &&
+                                rootfile[i]['@']['media-type'] === 'application/oebps-package+xml' &&
                                 rootfile[i]['@']['full-path']) {
               filename = rootfile[i]['@']['full-path'].toLowerCase().trim();
               break;
             }
           }
         } else if (rootfile['@']) {
-          if (rootfile['@']['media-type'] != 'application/oebps-package+xml' || !rootfile['@']['full-path']) {
+          if (rootfile['@']['media-type'] !== 'application/oebps-package+xml' || !rootfile['@']['full-path']) {
             this.emit('error', new Error('Rootfile in unknown format'));
             return;
           }
@@ -209,7 +209,7 @@ class EPub extends EventEmitter {
         }
 
         for (i = 0, len = this.zip.names.length; i < len; i++) {
-          if (this.zip.names[i].toLowerCase() == filename) {
+          if (this.zip.names[i].toLowerCase() === filename) {
             this.rootFile = this.zip.names[i];
             break;
           }
@@ -357,14 +357,14 @@ class EPub extends EventEmitter {
         }
         break;
       case 'identifier':
-        if (metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:scheme'] == 'ISBN') {
+        if (metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:scheme'] === 'ISBN') {
           this.metadata.ISBN = String(metadata[keys[i]]['#'] || '').trim();
         } else if (metadata[keys[i]]['@'] && metadata[keys[i]]['@'].id && metadata[keys[i]]['@'].id.match(/uuid/i)) {
           this.metadata.UUID = String(metadata[keys[i]]['#'] || '').replace('urn:uuid:', '').toUpperCase().trim();
         } else if (Array.isArray(metadata[keys[i]])) {
           for (j = 0; j < metadata[keys[i]].length; j++) {
             if (metadata[keys[i]][j]['@']) {
-              if (metadata[keys[i]][j]['@']['opf:scheme'] == 'ISBN') {
+              if (metadata[keys[i]][j]['@']['opf:scheme'] === 'ISBN') {
                 this.metadata.ISBN = String(metadata[keys[i]][j]['#'] || '').trim();
               } else if (metadata[keys[i]][j]['@'].id && metadata[keys[i]][j]['@'].id.match(/uuid/i)) {
                 this.metadata.UUID = String(metadata[keys[i]][j]['#'] || '').replace('urn:uuid:', '').toUpperCase().trim();
@@ -387,7 +387,7 @@ class EPub extends EventEmitter {
         this.metadata[meta['@'].property] = meta['#'];
       }
 
-      if (meta.name && meta.name == 'cover') {
+      if (meta.name && meta.name === 'cover') {
         this.metadata[meta.name] = meta.content;
       }
     }, this);
@@ -408,7 +408,7 @@ class EPub extends EventEmitter {
         if (manifest.item[i]['@']) {
           element = manifest.item[i]['@'];
 
-          if (element.href && element.href.substr(0, path_str.length) != path_str) {
+          if (element.href && element.href.substr(0, path_str.length) !== path_str) {
             element.href = path.concat([element.href]).join('/');
           }
 
@@ -437,7 +437,7 @@ class EPub extends EventEmitter {
         if (guide.reference[i]['@']) {
           element = guide.reference[i]['@'];
 
-          if (element.href && element.href.substr(0, path_str.length) != path_str) {
+          if (element.href && element.href.substr(0, path_str.length) !== path_str) {
             element.href = path.concat([element.href]).join('/');
           }
 
@@ -633,7 +633,7 @@ class EPub extends EventEmitter {
         let element;
 
         for (i = 0, len = keys.length; i < len; i++) {
-          if (this.manifest[keys[i]].href == img) {
+          if (this.manifest[keys[i]].href === img) {
             element = this.manifest[keys[i]];
             break;
           }
@@ -654,7 +654,7 @@ class EPub extends EventEmitter {
         let element;
 
         for (i = 0, len = keys.length; i < len; i++) {
-          if (this.manifest[keys[i]].href.split('#')[0] == link) {
+          if (this.manifest[keys[i]].href.split('#')[0] === link) {
             element = this.manifest[keys[i]];
             break;
           }
@@ -688,7 +688,7 @@ class EPub extends EventEmitter {
      **/
   getChapterRaw (id, callback) {
     if (this.manifest[id]) {
-      if (!(this.manifest[id]['media-type'] == 'application/xhtml+xml' || this.manifest[id]['media-type'] == 'image/svg+xml')) {
+      if (!(this.manifest[id]['media-type'] === 'application/xhtml+xml' || this.manifest[id]['media-type'] === 'image/svg+xml')) {
         return callback(new Error('Invalid mime type for chapter'));
       }
 
@@ -721,7 +721,7 @@ class EPub extends EventEmitter {
      **/
   getImage (id, callback) {
     if (this.manifest[id]) {
-      if ((this.manifest[id]['media-type'] || '').toLowerCase().trim().substr(0, 6) != 'image/') {
+      if ((this.manifest[id]['media-type'] || '').toLowerCase().trim().substr(0, 6) !== 'image/') {
         return callback(new Error('Invalid mime type for image'));
       }
 
