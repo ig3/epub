@@ -2,14 +2,16 @@ const xml2js = require('xml2js');
 const xml2jsOptions = xml2js.defaults['0.1'];
 const EventEmitter = require('events').EventEmitter;
 
+let ZipFile;
+
 try {
   // zipfile is an optional dependency:
-  var ZipFile = require('zipfile').ZipFile;
+  ZipFile = require('zipfile').ZipFile;
 } catch (err) {
   // Mock zipfile using pure-JS adm-zip:
   const AdmZip = require('adm-zip');
 
-  var ZipFile = function (filename) {
+  ZipFile = function (filename) {
     this.admZip = new AdmZip(filename);
     this.names = this.admZip.getEntries().map(function (zipEntry) {
       return zipEntry.entryName;
@@ -264,8 +266,8 @@ class EPub extends EventEmitter {
   parseRootFile (rootfile) {
     this.version = rootfile['@'].version || '2.0';
 
-    let i, len, keys, keyparts, key;
-    keys = Object.keys(rootfile);
+    let i, len, keyparts, key;
+    const keys = Object.keys(rootfile);
     for (i = 0, len = keys.length; i < len; i++) {
       keyparts = keys[i].split(':');
       key = (keyparts.pop() || '').toLowerCase().trim();
@@ -298,9 +300,9 @@ class EPub extends EventEmitter {
      *  Parses "metadata" block (book metadata, title, author etc.)
      **/
   parseMetadata (metadata) {
-    let i, j, len, keys, keyparts, key;
+    let i, j, len, keyparts, key;
 
-    keys = Object.keys(metadata);
+    const keys = Object.keys(metadata);
     for (i = 0, len = keys.length; i < len; i++) {
       keyparts = keys[i].split(':');
       key = (keyparts.pop() || '').toLowerCase().trim();
@@ -399,9 +401,9 @@ class EPub extends EventEmitter {
      *  Parses "manifest" block (all items included, html files, images, styles)
      **/
   parseManifest (manifest) {
-    let i; let len; const path = this.rootFile.split('/'); let element; let pathStr;
+    let i; let len; const path = this.rootFile.split('/'); let element;
     path.pop();
-    pathStr = path.join('/');
+    const pathStr = path.join('/');
 
     if (manifest.item) {
       for (i = 0, len = manifest.item.length; i < len; i++) {
@@ -424,9 +426,9 @@ class EPub extends EventEmitter {
      *  Parses "guide" block (locations of the fundamental structural components of the publication)
      **/
   parseGuide (guide) {
-    let i; let len; const path = this.rootFile.split('/'); let element; let pathStr;
+    let i; let len; const path = this.rootFile.split('/'); let element;
     path.pop();
-    pathStr = path.join('/');
+    const pathStr = path.join('/');
 
     if (guide.reference) {
       if (!Array.isArray(guide.reference)) {
@@ -481,10 +483,10 @@ class EPub extends EventEmitter {
      *  Parses ncx file for table of contents (title, html file)
      **/
   parseTOC () {
-    let i; let len; const path = this.spine.toc.href.split('/'); const idList = {}; let keys;
+    let i; let len; const path = this.spine.toc.href.split('/'); const idList = {};
     path.pop();
 
-    keys = Object.keys(this.manifest);
+    const keys = Object.keys(this.manifest);
     for (i = 0, len = keys.length; i < len; i++) {
       idList[this.manifest[keys[i]].href] = keys[i];
     }
