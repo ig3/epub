@@ -399,16 +399,16 @@ class EPub extends EventEmitter {
      *  Parses "manifest" block (all items included, html files, images, styles)
      **/
   parseManifest (manifest) {
-    let i; let len; const path = this.rootFile.split('/'); let element; let path_str;
+    let i; let len; const path = this.rootFile.split('/'); let element; let pathStr;
     path.pop();
-    path_str = path.join('/');
+    pathStr = path.join('/');
 
     if (manifest.item) {
       for (i = 0, len = manifest.item.length; i < len; i++) {
         if (manifest.item[i]['@']) {
           element = manifest.item[i]['@'];
 
-          if (element.href && element.href.substr(0, path_str.length) !== path_str) {
+          if (element.href && element.href.substr(0, pathStr.length) !== pathStr) {
             element.href = path.concat([element.href]).join('/');
           }
 
@@ -424,9 +424,9 @@ class EPub extends EventEmitter {
      *  Parses "guide" block (locations of the fundamental structural components of the publication)
      **/
   parseGuide (guide) {
-    let i; let len; const path = this.rootFile.split('/'); let element; let path_str;
+    let i; let len; const path = this.rootFile.split('/'); let element; let pathStr;
     path.pop();
-    path_str = path.join('/');
+    pathStr = path.join('/');
 
     if (guide.reference) {
       if (!Array.isArray(guide.reference)) {
@@ -437,7 +437,7 @@ class EPub extends EventEmitter {
         if (guide.reference[i]['@']) {
           element = guide.reference[i]['@'];
 
-          if (element.href && element.href.substr(0, path_str.length) !== path_str) {
+          if (element.href && element.href.substr(0, pathStr.length) !== pathStr) {
             element.href = path.concat([element.href]).join('/');
           }
 
@@ -481,12 +481,12 @@ class EPub extends EventEmitter {
      *  Parses ncx file for table of contents (title, html file)
      **/
   parseTOC () {
-    let i; let len; const path = this.spine.toc.href.split('/'); const id_list = {}; let keys;
+    let i; let len; const path = this.spine.toc.href.split('/'); const idList = {}; let keys;
     path.pop();
 
     keys = Object.keys(this.manifest);
     for (i = 0, len = keys.length; i < len; i++) {
-      id_list[this.manifest[keys[i]].href] = keys[i];
+      idList[this.manifest[keys[i]].href] = keys[i];
     }
 
     this.zip.readFile(this.spine.toc.href, function (err, data) {
@@ -499,7 +499,7 @@ class EPub extends EventEmitter {
 
       xmlparser.on('end', function (result) {
         if (result.navMap && result.navMap.navPoint) {
-          this.toc = this.walkNavMap(result.navMap.navPoint, path, id_list);
+          this.toc = this.walkNavMap(result.navMap.navPoint, path, idList);
         }
 
         this.emit('end');
@@ -523,7 +523,7 @@ class EPub extends EventEmitter {
      *  Walks the NavMap object through all levels and finds elements
      *  for TOC
      **/
-  walkNavMap (branch, path, id_list, level) {
+  walkNavMap (branch, path, idList, level) {
     level = level || 0;
 
     // don't go too far
@@ -562,9 +562,9 @@ class EPub extends EventEmitter {
           href = path.concat([href]).join('/');
           element.href = href;
 
-          if (id_list[element.href]) {
+          if (idList[element.href]) {
             // link existing object
-            element = this.manifest[id_list[element.href]];
+            element = this.manifest[idList[element.href]];
             element.title = title;
             element.order = order;
             element.level = level;
@@ -578,7 +578,7 @@ class EPub extends EventEmitter {
         }
       }
       if (branch[i].navPoint) {
-        output = output.concat(this.walkNavMap(branch[i].navPoint, path, id_list, level + 1));
+        output = output.concat(this.walkNavMap(branch[i].navPoint, path, idList, level + 1));
       }
     }
     return output;
