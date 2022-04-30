@@ -50,6 +50,7 @@
     "zipfile": "^0.5.11"
   },
   "devDependencies": {
+    "@ig3/eslint-config-entrain": "^2.0.5",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.11.7",
     "mocha": "^5.2.0",
@@ -58,6 +59,10 @@
   },
   "scripts": {
     "pretest": "tsc",
-    "test": "mocha dist/test/ --exit"
+    "test": "mocha dist/test/ --exit",
+    "lint": "eslint ."
+  },
+  "eslintConfig": {
+    "extends": "@ig3/eslint-config-entrain"
   }
 }
