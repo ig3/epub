@@ -673,6 +673,7 @@ class EPub extends EventEmitter {
       }.bind(this));
 
       // bring back linebreaks
+      // eslint-disable-next-line no-control-regex
       str = str.replace(/\u0000/g, '\n').trim();
 
       callback(null, str);
