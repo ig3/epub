@@ -19,8 +19,15 @@ in over 2 years.
 ## Usage
 
 ```js
-import EPub from 'epub'
-const epub = new EPub(pathToFile, imageWebRoot, chapterWebRoot)
+import EPub from '@ig3/epub';
+const epub = new EPub(pathToFile, imageWebRoot, chapterWebRoot);
+```
+
+OR
+
+```js
+const EPub = require('@ig3/epub');
+const epub = new EPub(pathToFile, imageWebRoot, chapterWebRoot);
 ```
 
 Where
