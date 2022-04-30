@@ -49,6 +49,18 @@ epub.on('end', function() {
 epub.parse()
 ```
 
+## events
+
+### error
+
+Emitted every time there is an error during parsing of the epub file.
+
+Passed an instance of Error.
+
+### end
+
+Emitted when parsing is complete.
+
 ## metadata
 
 Property of the *epub* object that holds several metadata fields about the book.
