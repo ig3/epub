@@ -468,7 +468,7 @@ class EPub extends EventEmitter {
       }
       for (i = 0, len = spine.itemref.length; i < len; i++) {
         if (spine.itemref[i]['@']) {
-          if (element = this.manifest[spine.itemref[i]['@'].idref]) {
+          if ((element = this.manifest[spine.itemref[i]['@'].idref])) {
             this.spine.contents.push(element);
           }
         }
