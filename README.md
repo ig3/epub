@@ -8,10 +8,13 @@
 
     npm install epub
 
-Or, if you want a pure-JS version (useful if used in a Node-Webkit app for example):
-
-    npm install epub --no-optional
-
+[zipfile](https://www.npmjs.com/package/zipfile) will be used if it is
+installed, but it is not a dependency or optional dependency. Install it
+globally if you want to use it. The version that was required used
+deprecated packages and it hasn't been updated in 4 years.
+[Issue 83](https://github.com/mapbox/node-zipfile/issues/83) indicates that
+it fails to build on node v12 and the author has not responded to the issue
+in over 2 years.
 
 ## Usage
 
