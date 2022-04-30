@@ -1,7 +1,7 @@
 {
   "name": "@ig3/epub",
   "description": "Parse ePub electronic book files with Node.JS",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Ian Goodacre",
   "contributors": [
     {
@@ -23,11 +23,7 @@
     "type": "git",
     "url": "git@github.com:ig3/epub.git"
   },
-  "files": [
-    "epub.js",
-    "epub.d.ts"
-  ],
-  "main": "./epub",
+  "main": "./epub.js",
   "typings": "./epub.d.ts",
   "licenses": [
     {
@@ -48,8 +44,6 @@
   },
   "devDependencies": {
     "@ig3/eslint-config-entrain": "^2.0.5",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.11.7",
     "mocha": "^5.2.0",
     "p-event": "^4"
   },
