@@ -307,51 +307,51 @@ class EPub extends EventEmitter {
       switch (key) {
       case 'publisher':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.publisher = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').trim();
+          this.metadata.publisher = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
         } else {
           this.metadata.publisher = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
         }
         break;
       case 'language':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.language = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').toLowerCase().trim();
+          this.metadata.language = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').toLowerCase().trim();
         } else {
           this.metadata.language = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').toLowerCase().trim();
         }
         break;
       case 'title':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.title = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').trim();
+          this.metadata.title = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
         } else {
           this.metadata.title = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
         }
         break;
       case 'subject':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.subject = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').trim();
+          this.metadata.subject = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
         } else {
           this.metadata.subject = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
         }
         break;
       case 'description':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.description = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').trim();
+          this.metadata.description = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
         } else {
           this.metadata.description = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
         }
         break;
       case 'creator':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.creator = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').trim();
-          this.metadata.creatorFileAs = String(metadata[keys[i]][0] && metadata[keys[i]][0]['@'] && metadata[keys[i]][0]['@']['opf:file-as'] || this.metadata.creator).trim();
+          this.metadata.creator = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+          this.metadata.creatorFileAs = String((metadata[keys[i]][0] && metadata[keys[i]][0]['@'] && metadata[keys[i]][0]['@']['opf:file-as']) || this.metadata.creator).trim();
         } else {
           this.metadata.creator = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-          this.metadata.creatorFileAs = String(metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:file-as'] || this.metadata.creator).trim();
+          this.metadata.creatorFileAs = String((metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:file-as']) || this.metadata.creator).trim();
         }
         break;
       case 'date':
         if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.date = String(metadata[keys[i]][0] && metadata[keys[i]][0]['#'] || metadata[keys[i]][0] || '').trim();
+          this.metadata.date = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
         } else {
           this.metadata.date = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
         }
@@ -541,11 +541,9 @@ class EPub extends EventEmitter {
       if (branch[i].navLabel) {
         let title = '';
         if (branch[i].navLabel && typeof branch[i].navLabel.text === 'string') {
-          title = branch[i].navLabel && branch[i].navLabel.text || branch[i].navLabel === branch[i].navLabel && branch[i].navLabel.text.length > 0
-            ? (branch[i].navLabel && branch[i].navLabel.text || branch[i].navLabel || '').trim()
-            : '';
+          title = branch[i].navLabel.text.trim() || '';
         }
-        let order = Number(branch[i]['@'] && branch[i]['@'].playOrder || 0);
+        let order = Number((branch[i]['@'] && branch[i]['@'].playOrder) || 0);
         if (isNaN(order)) {
           order = 0;
         }
@@ -573,7 +571,7 @@ class EPub extends EventEmitter {
           } else {
             // use new one
             element.href = href;
-            element.id = (branch[i]['@'] && branch[i]['@'].id || '').trim();
+            element.id = ((branch[i]['@'] && branch[i]['@'].id) || '').trim();
           }
 
           output.push(element);
