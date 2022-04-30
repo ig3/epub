@@ -1,9 +1,13 @@
 {
-  "name": "epub",
+  "name": "@ig3/epub",
   "description": "Parse ePub electronic book files with Node.JS",
   "version": "1.2.1",
-  "author": "Andris Reinman",
+  "author": "Ian Goodacre",
   "contributors": [
+    {
+      "name": "Ian Goodacre",
+      "email": "Ian.Goodacre@xtra.co.nz"
+    },
     {
       "name": "andris",
       "email": "andris@node.ee"
@@ -14,10 +18,10 @@
       "url": "https://github.com/julien-c"
     }
   ],
-  "homepage": "http://github.com/julien-c/epub",
+  "homepage": "git@github.com:ig3/epub",
   "repository": {
     "type": "git",
-    "url": "http://github.com/julien-c/epub.git"
+    "url": "git@github.com:ig3/epub.git"
   },
   "files": [
     "epub.js",
@@ -28,7 +32,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/julien-c/epub/blob/master/LICENSE"
+      "url": "https://github.com/ig3/epub/blob/master/LICENSE"
     }
   ],
   "engine": [
