@@ -61,6 +61,88 @@ Passed an instance of Error.
 
 Emitted when parsing is complete.
 
+## methods
+
+### constructor
+
+Returns a new instance of EPub.
+
+```js
+const epub = new EPub(pathToFile, imageroot, linkroot);
+```
+
+ * pathToFile <string>
+ * imageroot <string>
+ * linkroot <string>
+
+`pathToFile` is the file path to an EPUB file
+
+`imageWebRoot` is the prefix for image URL's. If it's */images/* then the actual URL (inside chapter HTML `<img>` blocks) is going to be */images/IMG_ID/IMG_FILENAME*, `IMG_ID` can be used to fetch the image form the ebook with `getImage`. Default: `/images/`
+
+`chapterWebRoot` is the prefix for chapter URL's. If it's */chapter/* then the actual URL (inside chapter HTML `<a>` links) is going to be */chapters/CHAPTER_ID/CHAPTER_FILENAME*, `CHAPTER_ID` can be used to fetch the image form the ebook with `getChapter`. Default: `/links/`
+ 
+### parse
+
+### open
+
+### checkMimeType
+
+### getRootFiles
+
+### handleRootFile
+
+### parseRootFile
+
+### parseMetaData
+
+### parseManifest
+
+### parseGuide
+
+### parseSpine
+
+### parseTOC
+
+### walkNavMap
+
+### getChapter
+
+### getChapterRaw
+
+### getImage
+
+### getFile(id, callback)
+
+ * id <string>
+ * callback <function>
+
+`id` is the Manifest id of the file to be read
+
+`callback(err, data, mediaType)` is the callback function.
+
+
+### readFile(filename[, options], callback)
+
+ * filename <string>
+ * options <string>
+ * callback <function>
+
+`filename` is the path of an epub file.
+
+`options` is the encoding of the epub file.
+
+`callback` is a function that is called with the decoded, stringified file
+contents.
+
+
+### hasDRM
+
+Parses the tree to see if there is an encryption file, signifying the
+presence of DRM.
+
+Returns true if the zip file includes `META-INF/encryption.xml`, otherwise
+returns false.
+
 ## metadata
 
 Property of the *epub* object that holds several metadata fields about the book.
