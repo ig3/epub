@@ -81,35 +81,55 @@ const epub = new EPub(pathToFile, imageroot, linkroot);
 
 `chapterWebRoot` is the prefix for chapter URL's. If it's */chapter/* then the actual URL (inside chapter HTML `<a>` links) is going to be */chapters/CHAPTER_ID/CHAPTER_FILENAME*, `CHAPTER_ID` can be used to fetch the image form the ebook with `getChapter`. Default: `/links/`
  
-### parse
+### parse([options])
 
-### open
+Initiate parsing of the epub file. The epub object is an event emitter. All
+results come by way of events.
 
-### checkMimeType
-
-### getRootFiles
-
-### handleRootFile
-
-### parseRootFile
-
-### parseMetaData
-
-### parseManifest
-
-### parseGuide
-
-### parseSpine
-
-### parseTOC
+The options object can be used to pass options.xml2jsOptions, to override
+the defaults for [xml2js](https://www.npmjs.com/package/xml2js), which are
+the '0.1' defaults. Note that the options must be set in
+options.xml2jsOptions, not in options directly.
 
 ### walkNavMap
 
-### getChapter
+Returns an array of objects for the TOC. This is written in a way that it
+might be useful independent of the parser, but it isn't obvious. It might
+be for internal use only.
 
-### getChapterRaw
+### getChapter(id, callback)
 
-### getImage
+Returns the content of a chapter, given the manifest ID of the chapter.
+
+id is a string: the manifest ID of the chapter to retrieve.
+
+callback is a function which will be called with arguments err and str,
+where str is the content of the chapter, as a string.
+
+If the chapter content includes `<body>...</body>` then only the content of
+the body tag is returned.
+
+Script and style blocks and onEvent handlers are removed.
+
+Image and link paths are modified according to imageroot and linkroot
+passed to the EPub constructor.
+
+The chapter file is assumed to be utf-8 encoded. There is no option to
+change the encoding.
+
+### getChapterRaw(id, callback)
+
+Like getChapter except that the full content of the chapter is returned
+without transformations.
+
+The chapter file is assumed to be utf-8 encoded. There is no option to
+change the encoding.
+
+### getImage(id, callback)
+
+Returns the content of an image file as a Buffer.
+
+The image file mime type must be `image/*`.
 
 ### getFile(id, callback)
 
@@ -118,7 +138,8 @@ const epub = new EPub(pathToFile, imageroot, linkroot);
 
 `id` is the Manifest id of the file to be read
 
-`callback(err, data, mediaType)` is the callback function.
+`callback(err, data, mediaType)` is the callback function. The data is a
+Buffer.
 
 
 ### readFile(filename[, options], callback)

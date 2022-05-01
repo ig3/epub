@@ -1,7 +1,7 @@
 {
   "name": "@ig3/epub",
   "description": "Parse ePub electronic book files with Node.JS",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Ian Goodacre",
   "contributors": [
     {
