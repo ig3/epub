@@ -1,4 +1,12 @@
-# epub [![Build Status](https://travis-ci.org/julien-c/epub.svg?branch=master)](https://travis-ci.org/julien-c/epub)
+# epub 
+
+This is a fork of [julien-c / epub](https://github.com/julien-c/epub).
+
+I have forgotten why I forked this. Possibly because the optional dependency
+`zipfile` doesn't install on node v12, but given the alternative `adm-zip`
+implementation, that seems unlikely: a simple `npm install epub` works.
+Possibly in order to add some documentation, as there wasn't much. You
+would probably be better off to use the original.
 
 **epub** is a node.js module to parse EPUB electronic book files.
 
