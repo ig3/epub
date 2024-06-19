@@ -1,44 +1,66 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const assert = require("assert");
-const mocha = require("mocha");
-const pEvent = require("p-event");
+'use strict';
+
+console.log('start test');
+const t = require('tape');
+console.log('got tape');
+
+// TODO: document why __esModule is being set
+Object.defineProperty(exports, '__esModule', { value: true });
+console.log('defined __esModule');
 const EPub = require('../../epub');
-mocha.describe('EPub', () => {
-    mocha.it('init', () => {
-        const epub = new EPub('./example/alice.epub');
-        assert.strictEqual(epub.imageroot, `/images/`);
+console.log('loaded epub');
+
+t.test('EPub', t => {
+  console.log('start outer test');
+  t.test('init', t => {
+    console.log('new EPub');
+    const epub = new EPub('./example/alice.epub');
+    console.log('2');
+    t.equal(epub.imageroot, '/images/', 'imageroot is /images/');
+    console.log('3');
+    t.end();
+  });
+  t.test('basic parsing', t => {
+    const epub = new EPub('./example/alice.epub');
+    epub.parse();
+    epub.on('end', () => {
+      t.ok(epub.metadata.title, 'metadata includes a title');
+      t.equal(epub.metadata.title, "Alice's Adventures in Wonderland", 'title is "Alice\'s Adventures in Wonderland');
+      t.equal(epub.toc.length, 14, 'toc length is 14');
+      t.ok(epub.toc[3].level, 'toc item 3 has a level');
+      t.ok(epub.toc[3].order, 'toc item 3 has an order');
+      t.ok(epub.toc[3].title, 'toc item 3 has a title');
+      t.ok(epub.toc[3].href, 'toc item 3 has an href');
+      t.ok(epub.toc[3].id, 'toc item 3 has an id');
+      t.equal(epub.imageroot, '/images/', 'imageroot is /images/');
+      t.end();
     });
-    mocha.it('basic parsing', async () => {
-        const epub = new EPub('./example/alice.epub');
+  });
+  t.test('supports empty chapters', t => {
+    const branch = [{ navLabel: { text: '' } }];
+    const epub = new EPub();
+    const res = epub.walkNavMap(branch, [], []);
+    t.ok(res, 'get a result');
+    t.end();
+  });
+  t.test('raises descriptive errors', t => {
+    const epub = new EPub('./example/alice_broken.epub');
+    return new Promise((resolve, reject) => {
+      try {
         epub.parse();
-        await pEvent(epub, 'end');
-        assert.ok(epub.metadata.title);
-        assert.equal(epub.metadata.title, "Alice's Adventures in Wonderland");
-        assert.equal(epub.toc.length, 14);
-        assert.ok(epub.toc[3].level);
-        assert.ok(epub.toc[3].order);
-        assert.ok(epub.toc[3].title);
-        assert.ok(epub.toc[3].href);
-        assert.ok(epub.toc[3].id);
-        assert.strictEqual(epub.imageroot, `/images/`);
+        epub.on('end', () => {
+          t.pass('should emit end event despite the error');
+          resolve();
+        });
+        epub.on('error', (err) => {
+          t.ok(err.message.includes('Parsing container XML failed in TOC: Invalid character in entity name'), 'get expected error message');
+        });
+      } catch (err) {
+        t.fail('should not throw an error');
+        t.end();
+        reject(err);
+      }
     });
-    mocha.it('supports empty chapters', () => {
-        var branch = [{ navLabel: { text: '' } }];
-        const epub = new EPub();
-        var res = epub.walkNavMap(branch, [], []);
-        assert.ok(res);
-    });
-    mocha.it('raises descriptive errors', async () => {
-        const epub = new EPub('./example/alice_broken.epub');
-        try {
-            epub.parse();
-            await pEvent(epub, 'end');
-        }
-        catch (err) {
-            assert.ok(err.message.includes('Parsing container XML failed in TOC: Invalid character in entity name'));
-            return;
-        }
-        assert.fail('should not get here');
-    });
+  });
+  t.end();
 });

@@ -557,7 +557,7 @@ class EPub extends EventEmitter {
         let element = {
           level: level,
           order: order,
-          title: title
+          title: title,
         };
 
         if (href) {

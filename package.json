@@ -39,19 +39,17 @@
     "books"
   ],
   "dependencies": {
-    "adm-zip": "^0.4.11",
-    "xml2js": "^0.4.23"
+    "adm-zip": "^0.5.14",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@ig3/eslint-config-entrain": "^2.0.5",
-    "mocha": "^5.2.0",
-    "p-event": "^4"
+    "@ig3/eslint-config-entrain": "^4.0.1",
+    "c8": "^10.1.2",
+    "multi-tape": "^1.7.0",
+    "tape": "^5.8.1"
   },
   "scripts": {
-    "test": "mocha test/ --exit",
+    "test": "eslint . && c8 multi-tape test/*.js",
     "lint": "eslint ."
-  },
-  "eslintConfig": {
-    "extends": "@ig3/eslint-config-entrain"
   }
 }
