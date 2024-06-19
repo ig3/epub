@@ -21,7 +21,7 @@
   "homepage": "git@github.com:ig3/epub",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ig3/epub.git"
+    "url": "git+ssh://git@github.com/ig3/epub.git"
   },
   "main": "./epub.js",
   "typings": "./epub.d.ts",
