@@ -272,18 +272,18 @@ class EPub extends EventEmitter {
       keyparts = keys[i].split(':');
       key = (keyparts.pop() || '').toLowerCase().trim();
       switch (key) {
-      case 'metadata':
-        this.parseMetadata(rootfile[keys[i]]);
-        break;
-      case 'manifest':
-        this.parseManifest(rootfile[keys[i]]);
-        break;
-      case 'spine':
-        this.parseSpine(rootfile[keys[i]]);
-        break;
-      case 'guide':
-        this.parseGuide(rootfile[keys[i]]);
-        break;
+        case 'metadata':
+          this.parseMetadata(rootfile[keys[i]]);
+          break;
+        case 'manifest':
+          this.parseManifest(rootfile[keys[i]]);
+          break;
+        case 'spine':
+          this.parseSpine(rootfile[keys[i]]);
+          break;
+        case 'guide':
+          this.parseGuide(rootfile[keys[i]]);
+          break;
       }
     }
 
@@ -307,74 +307,74 @@ class EPub extends EventEmitter {
       keyparts = keys[i].split(':');
       key = (keyparts.pop() || '').toLowerCase().trim();
       switch (key) {
-      case 'publisher':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.publisher = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
-        } else {
-          this.metadata.publisher = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-        }
-        break;
-      case 'language':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.language = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').toLowerCase().trim();
-        } else {
-          this.metadata.language = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').toLowerCase().trim();
-        }
-        break;
-      case 'title':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.title = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
-        } else {
-          this.metadata.title = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-        }
-        break;
-      case 'subject':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.subject = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
-        } else {
-          this.metadata.subject = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-        }
-        break;
-      case 'description':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.description = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
-        } else {
-          this.metadata.description = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-        }
-        break;
-      case 'creator':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.creator = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
-          this.metadata.creatorFileAs = String((metadata[keys[i]][0] && metadata[keys[i]][0]['@'] && metadata[keys[i]][0]['@']['opf:file-as']) || this.metadata.creator).trim();
-        } else {
-          this.metadata.creator = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-          this.metadata.creatorFileAs = String((metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:file-as']) || this.metadata.creator).trim();
-        }
-        break;
-      case 'date':
-        if (Array.isArray(metadata[keys[i]])) {
-          this.metadata.date = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
-        } else {
-          this.metadata.date = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
-        }
-        break;
-      case 'identifier':
-        if (metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:scheme'] === 'ISBN') {
-          this.metadata.ISBN = String(metadata[keys[i]]['#'] || '').trim();
-        } else if (metadata[keys[i]]['@'] && metadata[keys[i]]['@'].id && metadata[keys[i]]['@'].id.match(/uuid/i)) {
-          this.metadata.UUID = String(metadata[keys[i]]['#'] || '').replace('urn:uuid:', '').toUpperCase().trim();
-        } else if (Array.isArray(metadata[keys[i]])) {
-          for (j = 0; j < metadata[keys[i]].length; j++) {
-            if (metadata[keys[i]][j]['@']) {
-              if (metadata[keys[i]][j]['@']['opf:scheme'] === 'ISBN') {
-                this.metadata.ISBN = String(metadata[keys[i]][j]['#'] || '').trim();
-              } else if (metadata[keys[i]][j]['@'].id && metadata[keys[i]][j]['@'].id.match(/uuid/i)) {
-                this.metadata.UUID = String(metadata[keys[i]][j]['#'] || '').replace('urn:uuid:', '').toUpperCase().trim();
+        case 'publisher':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.publisher = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+          } else {
+            this.metadata.publisher = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
+          }
+          break;
+        case 'language':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.language = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').toLowerCase().trim();
+          } else {
+            this.metadata.language = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').toLowerCase().trim();
+          }
+          break;
+        case 'title':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.title = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+          } else {
+            this.metadata.title = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
+          }
+          break;
+        case 'subject':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.subject = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+          } else {
+            this.metadata.subject = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
+          }
+          break;
+        case 'description':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.description = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+          } else {
+            this.metadata.description = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
+          }
+          break;
+        case 'creator':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.creator = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+            this.metadata.creatorFileAs = String((metadata[keys[i]][0] && metadata[keys[i]][0]['@'] && metadata[keys[i]][0]['@']['opf:file-as']) || this.metadata.creator).trim();
+          } else {
+            this.metadata.creator = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
+            this.metadata.creatorFileAs = String((metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:file-as']) || this.metadata.creator).trim();
+          }
+          break;
+        case 'date':
+          if (Array.isArray(metadata[keys[i]])) {
+            this.metadata.date = String((metadata[keys[i]][0] && metadata[keys[i]][0]['#']) || metadata[keys[i]][0] || '').trim();
+          } else {
+            this.metadata.date = String(metadata[keys[i]]['#'] || metadata[keys[i]] || '').trim();
+          }
+          break;
+        case 'identifier':
+          if (metadata[keys[i]]['@'] && metadata[keys[i]]['@']['opf:scheme'] === 'ISBN') {
+            this.metadata.ISBN = String(metadata[keys[i]]['#'] || '').trim();
+          } else if (metadata[keys[i]]['@'] && metadata[keys[i]]['@'].id && metadata[keys[i]]['@'].id.match(/uuid/i)) {
+            this.metadata.UUID = String(metadata[keys[i]]['#'] || '').replace('urn:uuid:', '').toUpperCase().trim();
+          } else if (Array.isArray(metadata[keys[i]])) {
+            for (j = 0; j < metadata[keys[i]].length; j++) {
+              if (metadata[keys[i]][j]['@']) {
+                if (metadata[keys[i]][j]['@']['opf:scheme'] === 'ISBN') {
+                  this.metadata.ISBN = String(metadata[keys[i]][j]['#'] || '').trim();
+                } else if (metadata[keys[i]][j]['@'].id && metadata[keys[i]][j]['@'].id.match(/uuid/i)) {
+                  this.metadata.UUID = String(metadata[keys[i]][j]['#'] || '').replace('urn:uuid:', '').toUpperCase().trim();
+                }
               }
             }
           }
-        }
-        break;
+          break;
       }
     }
 
