@@ -1,23 +1,15 @@
 'use strict';
 
-console.log('start test');
-const t = require('tape');
-console.log('got tape');
+const t = require('@ig3/test');
 
 // TODO: document why __esModule is being set
 Object.defineProperty(exports, '__esModule', { value: true });
-console.log('defined __esModule');
 const EPub = require('../../epub');
-console.log('loaded epub');
 
 t.test('EPub', t => {
-  console.log('start outer test');
   t.test('init', t => {
-    console.log('new EPub');
     const epub = new EPub('./example/alice.epub');
-    console.log('2');
     t.equal(epub.imageroot, '/images/', 'imageroot is /images/');
-    console.log('3');
     t.end();
   });
   t.test('basic parsing', t => {
@@ -50,6 +42,7 @@ t.test('EPub', t => {
         epub.parse();
         epub.on('end', () => {
           t.pass('should emit end event despite the error');
+          t.end();
           resolve();
         });
         epub.on('error', (err) => {
